@@ -1,0 +1,19 @@
+Candidate: Sample Candidate
+
+Experience:
+6 years in DevOps engineering.
+
+Skills:
+Kubernetes, Docker, Jenkins, GitHub Actions, Linux, Shell scripting, AWS basics.
+
+Projects:
+- Managed Jenkins pipelines for build and deployment.
+- Deployed applications on Kubernetes.
+- Troubleshot pod failures and service connectivity issues.
+- Created Docker images and maintained Git repositories.
+
+Incident Experience:
+Handled deployment failures, container restarts, and application log analysis.
+
+Tools:
+Jenkins, Kubernetes, Docker, Git, Linux, NGINX.

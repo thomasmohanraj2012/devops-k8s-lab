@@ -1,0 +1,24 @@
+Role: DevOps Engineer
+
+Required Skills:
+- Kubernetes
+- Jenkins
+- Linux
+- Docker
+- CI/CD
+- Git
+- Monitoring and troubleshooting
+
+Preferred Skills:
+- Cloud cost optimization
+- Terraform
+- SonarQube
+- Nexus
+- Security best practices
+
+Responsibilities:
+- Build and maintain CI/CD pipelines
+- Deploy applications on Kubernetes
+- Troubleshoot production incidents
+- Improve automation
+- Support platform reliability

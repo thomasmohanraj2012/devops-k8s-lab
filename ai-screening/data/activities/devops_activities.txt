@@ -1,0 +1,21 @@
+Daily Activities:
+- Check Kubernetes pod health
+- Troubleshoot failed deployments
+- Review Jenkins pipeline failures
+- Validate application logs
+- Support incident response
+
+Weekly Activities:
+- Review platform stability
+- Improve automation scripts
+- Update runbooks
+- Review CI/CD failures
+- Support release readiness
+
+Scenario Areas:
+- Jenkins outage
+- Kubernetes CrashLoopBackOff
+- Docker image pull failures
+- Persistent volume issues
+- NGINX service exposure
+- Cloud resource optimization

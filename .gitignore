@@ -1,0 +1,14 @@
+venv/
+__pycache__/
+*.pyc
+.streamlit/
+.env
+*.log
+
+node_modules/
+
+*.pdf
+
+persistent-data/
+
+.ollama/
