@@ -4,7 +4,6 @@ from pypdf import PdfReader
 import re
 import plotly.express as px
 import requests
-from audio_recorder_streamlit import audio_recorder
 from interview.interview_engine import (
     generate_questions,
     generate_expected_answer,
@@ -416,7 +415,6 @@ if uploaded_file and job_description:
                 "Candidate Answer",
                 key=f"answer_{idx}"
             )
-            audio_bytes = audio_recorder()
 
             responses.append({
                 "question": question,

@@ -1,10 +1,9 @@
-from audio_recorder_streamlit import audio_recorder
+
 import streamlit as st
 from pypdf import PdfReader
 import re
 import plotly.express as px
 import requests
-from audio_recorder_streamlit import audio_recorder
 from interview.interview_engine import (
     generate_questions,
     generate_expected_answer,
@@ -385,81 +384,3 @@ if uploaded_file:
 
 else:
     st.info("Upload a PDF resume to begin screening.")
-
-# ---------------------------------------------------
-# AI Technical Interview
-# ---------------------------------------------------
-if uploaded_file and job_description:
-
-    st.divider()
-    st.subheader("🎤 AI Technical Interview")
-
-    if st.button("Start AI Interview"):
-        st.session_state["start_interview"] = True
-
-    if st.session_state.get("start_interview", False):
-
-        questions = generate_questions(
-            resume_text,
-            job_description
-        )
-
-        responses = []
-
-        for idx, question in enumerate(questions):
-
-            st.markdown(f"### Question {idx + 1}")
-
-            st.write(question)
-
-            answer = st.text_area(
-                "Candidate Answer",
-                key=f"answer_{idx}"
-            )
-            audio_bytes = audio_recorder()
-
-            responses.append({
-                "question": question,
-                "answer": answer
-            })
-
-            col1, col2 = st.columns(2)
-
-            with col1:
-                if st.button(
-                    f"Expected Answer {idx}"
-                ):
-                    result = generate_expected_answer(
-                        question
-                    )
-                    st.info(result)
-
-            with col2:
-                if answer:
-                    if st.button(
-                        f"Follow-up Question {idx}"
-                    ):
-                        followup = generate_followup_question(
-                            question,
-                            answer
-                        )
-                        st.success(followup)
-
-        if st.button(
-            "Generate Interview Report"
-        ):
-
-            with st.spinner(
-                "Generating interview report..."
-            ):
-
-                report = generate_interview_report(
-                    responses
-                )
-
-            st.subheader(
-                "📄 Interview Evaluation"
-            )
-
-            st.markdown(report)
-
