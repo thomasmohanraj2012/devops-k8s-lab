@@ -388,15 +388,13 @@ else:
 # ---------------------------------------------------
 # AI Technical Interview
 # ---------------------------------------------------
+
 if uploaded_file and job_description:
 
     st.divider()
     st.subheader("🎤 AI Technical Interview")
 
     if st.button("Start AI Interview"):
-        st.session_state["start_interview"] = True
-
-    if st.session_state.get("start_interview", False):
 
         questions = generate_questions(
             resume_text,
@@ -407,7 +405,9 @@ if uploaded_file and job_description:
 
         for idx, question in enumerate(questions):
 
-            st.markdown(f"### Question {idx + 1}")
+            st.markdown(
+                f"### Question {idx + 1}"
+            )
 
             st.write(question)
 
@@ -424,40 +424,40 @@ if uploaded_file and job_description:
             col1, col2 = st.columns(2)
 
             with col1:
+
                 if st.button(
                     f"Expected Answer {idx}"
                 ):
+
                     result = generate_expected_answer(
                         question
                     )
+
                     st.info(result)
 
             with col2:
+
                 if answer:
+
                     if st.button(
-                        f"Follow-up Question {idx}"
+                        f"Follow-Up Question {idx}"
                     ):
-                        followup = generate_followup_question(
-                            question,
-                            answer
+
+                        followup = (
+                            generate_followup_question(
+                                question,
+                                answer
+                            )
                         )
+
                         st.success(followup)
 
         if st.button(
             "Generate Interview Report"
         ):
 
-            with st.spinner(
-                "Generating interview report..."
-            ):
-
-                report = generate_interview_report(
-                    responses
-                )
-
-            st.subheader(
-                "📄 Interview Evaluation"
+            report = generate_interview_report(
+                responses
             )
 
             st.markdown(report)
-

@@ -1,9 +1,12 @@
+
 from audio_recorder_streamlit import audio_recorder
 import streamlit as st
 from pypdf import PdfReader
 import re
 import plotly.express as px
 import requests
+from gtts import gTTS
+import tempfile
 from audio_recorder_streamlit import audio_recorder
 from interview.interview_engine import (
     generate_questions,
@@ -11,6 +14,8 @@ from interview.interview_engine import (
     generate_followup_question,
     generate_interview_report
 )
+
+from interview.answer_evaluator import evaluate_candidate_answer
 
 
 
@@ -21,6 +26,31 @@ st.set_page_config(
     page_title="AI Resume Screening Assistant",
     layout="wide"
 )
+
+if st.button("Test Audio"):
+
+    st.audio("test.mp3")
+
+menu = st.sidebar.radio(
+    "Navigation",
+    [
+        "Dashboard",
+        "Resume Screening",
+        "Interview Copilot",
+        "Analytics"
+    ]
+)
+
+if menu == "Dashboard":
+
+    st.header("Executive Dashboard")
+
+    col1,col2,col3,col4 = st.columns(4)
+
+    col1.metric("Candidates","12")
+    col2.metric("Avg Score","84%")
+    col3.metric("Questions Generated","48")
+    col4.metric("Hiring Readiness","High")
 
 # -------------------------------------------------------
 # Skill Dictionary
@@ -94,6 +124,30 @@ Keep it concise, professional, and suitable for a Talent Acquisition POC.
 
     except Exception as e:
         return f"Error connecting to Ollama: {e}"
+    
+    # -------------------------------------------------------
+# Text To Speech
+# -------------------------------------------------------
+def speak_question(text):
+
+    try:
+        tts = gTTS(
+            text=text,
+            lang="en"
+        )
+
+        temp_file = tempfile.NamedTemporaryFile(
+            delete=False,
+            suffix=".mp3"
+        )
+
+        tts.save(temp_file.name)
+
+        return temp_file.name
+
+    except Exception as e:
+        st.error(f"TTS Error: {e}")
+        return None
 
 
 # -------------------------------------------------------
@@ -163,7 +217,10 @@ def extract_experience(resume_text):
 # -------------------------------------------------------
 # Application Header
 # -------------------------------------------------------
-st.title("🚀 AI Resume Screening Assistant")
+st.title("🚀 TalentCopilot AI")
+st.caption(
+    "AI-Powered Talent Intelligence Platform"
+)
 
 st.write(
     "Upload a resume, paste a job description, calculate match score, "
@@ -412,11 +469,21 @@ if uploaded_file and job_description:
 
             st.write(question)
 
+            audio_file = speak_question(question)
+
+            st.write("Generated audio:", audio_file)
+
+            if audio_file:
+                st.audio(audio_file)
+
             answer = st.text_area(
                 "Candidate Answer",
                 key=f"answer_{idx}"
             )
-            audio_bytes = audio_recorder()
+
+            audio_bytes = audio_recorder(
+                key=f"audio_{idx}"
+            )
 
             responses.append({
                 "question": question,
@@ -445,21 +512,20 @@ if uploaded_file and job_description:
                         )
                         st.success(followup)
 
-        if st.button(
-            "Generate Interview Report"
+    if st.button(
+        "Generate Interview Report"
+    ):
+
+        with st.spinner(
+            "Generating interview report..."
         ):
 
-            with st.spinner(
-                "Generating interview report..."
-            ):
-
-                report = generate_interview_report(
-                    responses
-                )
-
-            st.subheader(
-                "📄 Interview Evaluation"
+            report = generate_interview_report(
+                responses
             )
 
-            st.markdown(report)
+        st.subheader(
+            "📄 Interview Evaluation"
+        )
 
+        st.markdown(report)
