@@ -1,76 +1,16 @@
 
-from speech.transcriber import transcribe_audio
-from audio_recorder_streamlit import audio_recorder
 import streamlit as st
 from pypdf import PdfReader
 import re
 import plotly.express as px
 import requests
-from gtts import gTTS
-import tempfile
-import os
-
-st.set_page_config(
-    page_title="TalentCopilot AI",
-    page_icon="🚀",
-    layout="wide"
-)
-
-st.markdown("""
-<style>
-
-/* Main Background */
-.stApp {
-    background-color: #F5F7FA;
-}
-
-/* KPI Cards */
-[data-testid="stMetric"] {
-    background: white;
-    padding: 15px;
-    border-radius: 12px;
-    box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
-}
-
-/* Buttons */
-.stButton > button {
-    width: 100%;
-    border-radius: 10px;
-    background-color: #1976D2;
-    color: white;
-    font-weight: bold;
-}
-
-/* Sidebar */
-section[data-testid="stSidebar"] {
-    background-color: #0F172A;
-}
-
-section[data-testid="stSidebar"] * {
-    color: white;
-}
-
-/* Upload Area */
-[data-testid="stFileUploader"] {
-    background-color: white;
-    padding: 15px;
-    border-radius: 10px;
-}
-
-</style>
-""", unsafe_allow_html=True)
-
-
-
-from audio_recorder_streamlit import audio_recorder
+import streamlit.components.v1 as components
 from interview.interview_engine import (
     generate_questions,
     generate_expected_answer,
     generate_followup_question,
     generate_interview_report
 )
-
-from interview.answer_evaluator import evaluate_candidate_answer
 
 
 
@@ -81,31 +21,6 @@ st.set_page_config(
     page_title="AI Resume Screening Assistant",
     layout="wide"
 )
-
-if st.button("Test Audio"):
-
-    st.audio("test.mp3")
-
-menu = st.sidebar.radio(
-    "Navigation",
-    [
-        "Dashboard",
-        "Resume Screening",
-        "Interview Copilot",
-        "Analytics"
-    ]
-)
-
-if menu == "Dashboard":
-
-    st.header("Executive Dashboard")
-
-    col1,col2,col3,col4 = st.columns(4)
-
-    col1.metric("Candidates","12")
-    col2.metric("Avg Score","84%")
-    col3.metric("Questions Generated","48")
-    col4.metric("Hiring Readiness","High")
 
 # -------------------------------------------------------
 # Skill Dictionary
@@ -179,30 +94,6 @@ Keep it concise, professional, and suitable for a Talent Acquisition POC.
 
     except Exception as e:
         return f"Error connecting to Ollama: {e}"
-    
-    # -------------------------------------------------------
-# Text To Speech
-# -------------------------------------------------------
-def speak_question(text):
-
-    try:
-        tts = gTTS(
-            text=text,
-            lang="en"
-        )
-
-        temp_file = tempfile.NamedTemporaryFile(
-            delete=False,
-            suffix=".mp3"
-        )
-
-        tts.save(temp_file.name)
-
-        return temp_file.name
-
-    except Exception as e:
-        st.error(f"TTS Error: {e}")
-        return None
 
 
 # -------------------------------------------------------
@@ -272,10 +163,7 @@ def extract_experience(resume_text):
 # -------------------------------------------------------
 # Application Header
 # -------------------------------------------------------
-st.title("🚀 TalentCopilot AI")
-st.caption(
-    "AI-Powered Talent Intelligence Platform"
-)
+st.title("🚀 AI Resume Screening Assistant")
 
 st.write(
     "Upload a resume, paste a job description, calculate match score, "
@@ -524,58 +412,10 @@ if uploaded_file and job_description:
 
             st.write(question)
 
-            audio_file = speak_question(question)
-
-            st.write("Generated audio:", audio_file)
-
-            if audio_file:
-                st.audio(audio_file)
-
             answer = st.text_area(
                 "Candidate Answer",
                 key=f"answer_{idx}"
             )
-
-            audio_bytes = audio_recorder(                
-                text="🎤 Record Answer",
-                pause_threshold=10.0,
-                sample_rate=41000,
-                key=f"audio_{idx}"
-            )
-
-            if audio_bytes:
-
-                import os
-
-                os.makedirs("recordings", exist_ok=True)
-
-                with open(
-                    f"recordings/question_{idx}.wav",
-                    "wb"
-                ) as f:
-
-                    f.write(audio_bytes)
-
-                st.success(
-                    f"Recording saved: recordings/question_{idx}.wav"
-                )
-
-                st.info("Converting speech to text...")
-
-                transcribed_text = transcribe_audio(
-                    f"recordings/question_{idx}.wav"
-                )
-
-                st.success("Speech converted successfully!")
-
-                st.text_area(
-                    "Transcribed Answer",
-                    value=transcribed_text,
-                    height=150,
-                    key=f"transcribed_{idx}"
-                )
-
-                answer = transcribed_text
 
             responses.append({
                 "question": question,
@@ -604,20 +444,21 @@ if uploaded_file and job_description:
                         )
                         st.success(followup)
 
-    if st.button(
-        "Generate Interview Report"
-    ):
-
-        with st.spinner(
-            "Generating interview report..."
+        if st.button(
+            "Generate Interview Report"
         ):
 
-            report = generate_interview_report(
-                responses
+            with st.spinner(
+                "Generating interview report..."
+            ):
+
+                report = generate_interview_report(
+                    responses
+                )
+
+            st.subheader(
+                "📄 Interview Evaluation"
             )
 
-        st.subheader(
-            "📄 Interview Evaluation"
-        )
+            st.markdown(report)
 
-        st.markdown(report)

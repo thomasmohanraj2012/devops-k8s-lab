@@ -15,13 +15,52 @@ st.set_page_config(
     page_icon="🚀",
     layout="wide"
 )
+st.markdown("""
+<style>
+
+.stApp {
+    background-color: #0E1117;
+    color: white;
+}
+h1,h2,h3,h4,h5,h6,p,label {
+    color:white !important;
+}
+
+section[data-testid="stSidebar"] {
+    background: linear-gradient(180deg,#111827,#1F2937);
+}
+
+.section-header {
+    background: linear-gradient(90deg,#7C3AED,#2563EB);
+    padding: 15px;
+    border-radius: 12px;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.glass-card {
+    background: rgba(255,255,255,0.05);
+    border-radius: 15px;
+    padding: 20px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+</style>
+""", unsafe_allow_html=True)
 
 st.markdown("""
 <style>
 
 /* Main Background */
 .stApp {
-    background-color: #F5F7FA;
+    background-color: #0E1117;
+}
+
+/* Global Text */
+h1, h2, h3, h4, h5, h6, p, label {
+    color: white !important;
 }
 
 /* KPI Cards */
@@ -29,40 +68,309 @@ st.markdown("""
     background: white;
     padding: 15px;
     border-radius: 12px;
-    box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
 }
 
-/* Buttons */
-.stButton > button {
-    width: 100%;
-    border-radius: 10px;
-    background-color: #1976D2;
-    color: white;
-    font-weight: bold;
+[data-testid="stMetric"] * {
+    color: black !important;
 }
 
 /* Sidebar */
 section[data-testid="stSidebar"] {
-    background-color: #0F172A;
+    background: #0F172A;
 }
 
 section[data-testid="stSidebar"] * {
     color: white;
 }
 
-/* Upload Area */
-[data-testid="stFileUploader"] {
-    background-color: white;
-    padding: 15px;
+/* Buttons */
+.stButton > button {
+    width: 100%;
     border-radius: 10px;
+    background-color: #2563EB;
+    color: white;
+}
+
+/* File Uploader */
+[data-testid="stFileUploader"] {
+    background-color: #111827 !important;
+    border: 2px dashed #6366F1 !important;
+    border-radius: 15px !important;
+    padding: 20px !important;
+}
+
+[data-testid="stFileUploaderDropzone"] {
+    background-color: #1E293B !important;
+    border: 2px dashed #7C3AED !important;
+    border-radius: 12px !important;
+}
+
+[data-testid="stFileUploader"] *,
+[data-testid="stFileUploaderDropzone"] * {
+    color: white !important;
+}
+
+/* Job Description Box */
+textarea {
+    background-color: #1E293B !important;
+    color: white !important;
+    border: 1px solid #475569 !important;
+    border-radius: 12px !important;
+}
+
+/* Make upload area more prominent */
+[data-testid="stFileUploader"] {
+    background: linear-gradient(135deg,#111827,#1E293B) !important;
+    border: 3px dashed #8B5CF6 !important;
+    border-radius: 18px !important;
+    padding: 25px !important;
+    box-shadow: 0 0 20px rgba(139,92,246,0.4) !important;
+}
+
+/* Hover effect */
+[data-testid="stFileUploader"] button:hover {
+    background: linear-gradient(90deg,#1D4ED8,#6D28D9) !important;
+}
+
+/* Force Upload Button Styling */
+.stFileUploader button,
+[data-testid="stFileUploader"] button,
+[data-testid="stFileUploaderDropzone"] button {
+    background: linear-gradient(90deg,#2563EB,#7C3AED) !important;
+    color: white !important;
+    font-weight: 700 !important;
+    border-radius: 10px !important;
+    border: none !important;
+    padding: 10px 20px !important;
+    box-shadow: 0 0 10px rgba(124,58,237,0.5) !important;
+}
+
+/* Force text color */
+.stFileUploader button *,
+[data-testid="stFileUploader"] button * {
+    color: white !important;
 }
 
 </style>
 """, unsafe_allow_html=True)
 
+# st.markdown("""
+# <style>
+
+# /* Main Background */
+# .stApp {
+#     background-color: #0E1117;
+# }
+
+# /* Global Text */
+# h1* h2,*h3, h4, h5, h6, p, label {
+#     color: white !important;
+# }
+
+# /* KPI Cards */
+# [data-testid="stMetric"] {
+#     background: white;
+#     padding: 15px;
+#     border-radius: 12px;
+# }
+
+# [data-testid="stMetric"] * {
+#     color: black !important;
+# }
+
+# /* Sidebar */
+# section[data-testid="stSidebar"] {
+#     background: #0F172A;
+# }
+
+# section[data-testid="stSidebar"] * {
+#     color: white;
+# }
+
+# /* Buttons */
+# .stButton > button {
+#   * width: 100%;
+#     border*radius* 10px;
+#     background: #2563EB;
+#     color: white;
+# }
+
+# /* File Uploader */
+# [data-testid="stFileUploader"] {*    background: #111827 !important*
+#     border: 2px dashed #6366F1 !i*portant;
+#     border-radius: 15px !*mportant;
+#     padding: 20px !impor*ant;
+# }
+
+# [data-testid="stFileUploaderDropzone"] {
+#     background**#1E293B !important;
+#     border: 2px dashed #7C3AED !important;
+#     border-radius: 12px !important;
+# }
+
+# [data-testid="stFileUploader"] *,
+# [data-testid="stFileUploaderDropzone"] * {
+#     color: white !important;
+# }
+
+# /* Text Area */
+# textarea {
+#     background: #1E29*B !important;
+#     color: white !im*ortant;
+#     border: 1px solid #475*69 !important;
+#     border-radius: *2px !important;
+# }
+
+# </style>
+# """, unsafe_allow_html=True)
+
+# st.markdown("""
+# <style>
+
+# /* Main Background */
+# .stApp {
+#     background-color: #0E1117;
+# }
+            
+# /* Global Text */
+# h1, h2, h3, h4, h5, h6, p, label {
+#     color: white !important;
+# }
+
+# /* KPI Cards */
+# [data-testid="stMetric"] {
+#     background: white;
+#     padding: 15px;
+#     border-radius: 12px;
+#     box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
+# }
+            
+# [data-testid="stMetric"] * {
+#     color: black !important;
+# }
+            
+# [data-testid="stMetricValue"] {
+#     color: #000000 !important;
+# }
+
+# [data-testid="stMetricLabel"] {
+#     color: #000000 !important;
+# }
+
+# [data-testid="stMetric"] label {
+#     color: #000000 !important;
+# }
+
+# [data-testid="stMetric"] div {
+#     color: #000000 !important;
+# }
+            
+# [data-testid="stMetricLabel"] {
+#     color: black !important;
+#     font-weight: bold !important;
+# }
+
+# [data-testid="stMetricValue"] {
+#     color: black !important;
+#     font-size: 28px !important;
+#     font-weight: bold !important;
+# }
+
+# /* Buttons */
+# .stButton > button {
+#     width: 100%;
+#     border-radius: 10px;
+#     background-color: #1976D2;
+#     color: white;
+#     font-weight: bold;
+# }
+
+# /* Sidebar */
+# section[data-testid="stSidebar"] {
+#     background-color: #0F172A;
+# }
+
+# section[data-testid="stSidebar"] * {
+#     color: white;
+# }
+
+# # /* Upload Area */
+# # [data-testid="stFileUploader"] {
+# #     background-color: white;
+# #     padding: 15px;
+# #     border-radius: 10px;
+# # }
+            
+# /* Upload Area */
+# [data-testid="stFileUploader"] {
+#     background-color: #11182* !important;
+#     border: 2px dashe* #6366F1 !important;
+#     border-ra*ius: 15px !important;
+#     padding:*20px !important;
+# }
+
+# [data-testid="stFileUploader"] * {
+#     color: whi*e !important;
+# }
+
+# [data-testid="stFileUploaderDropzone"] {
+#     backgro*nd-color: #1E293B !important;
+#     border-radius: 12px !important;
+# }
+
+# [data-testid="stFileUploaderDropzone"] * {
+#     color: white !important;
+# }
+            
+# # /* Force dark upload zone */
+# # [data-testid="stFileUploaderDropzone"] div {
+# #     background-color: *1E293B !important;
+# #     color: whit* !important;
+# # }
+
+# # [data-testid="stFileUploaderDropzone"] section {
+# #     *ackground-color: #1E293B !importan*;
+# # }
+            
+# /* Force dark file uploader */
+# [data-testid="stFileUploaderDropzone"] {
+#     background: *1E293B !important;
+#     border: 2px*dashed #7C3AED !important;
+# }
+
+# [data-testid="stFileUploaderDropzone"] * div {
+#     background: #1E293B !im*ortant;
+# }
+
+# [data-testid="stFileUploaderDropzone"] section {
+#     backg*ound: #1E293B !important;
+# }
+
+# [data-testid="stFileUploaderDropzone"] s*an {
+#     color: white !important;
+# *
+            
+# /* Streamlit 1.59 uploader fix */
+# .css-1cpxqw2,
+# .css-1d391kg,
+# .css-1kyxreq {
+#     background-color: #1E293B !important;
+#     color: white !important;
+# }
+
+# /* Job Description Text Area */
+# textarea {
+#     background-color: #1E293B !important;
+#     color: white !important;
+#     border: 1px solid #475569 !important;
+#     border-radius: 12px !important;
+# }
+
+# </style>
+# """, unsafe_allow_html=True)
 
 
-from audio_recorder_streamlit import audio_recorder
+
 from interview.interview_engine import (
     generate_questions,
     generate_expected_answer,
@@ -75,12 +383,8 @@ from interview.answer_evaluator import evaluate_candidate_answer
 
 
 # -------------------------------------------------------
-# Streamlit Page Configuration
+# Application UI
 # -------------------------------------------------------
-st.set_page_config(
-    page_title="AI Resume Screening Assistant",
-    layout="wide"
-)
 
 if st.button("Test Audio"):
 
@@ -89,23 +393,96 @@ if st.button("Test Audio"):
 menu = st.sidebar.radio(
     "Navigation",
     [
-        "Dashboard",
-        "Resume Screening",
-        "Interview Copilot",
-        "Analytics"
+        "🏠 Dashboard",
+        "📄 Resume Screening",
+        "🎤 Interview Copilot",
+        "📊 Analytics"
     ]
 )
 
-if menu == "Dashboard":
+if menu == "🏠 Dashboard":
+    st.title("🚀 TalentCopilot AI")
+    st.subheader("AI Powered Talent Intelligence Platform")
+    st.caption("Resume Screening • Interview Copilot • Talent Analytics")
 
-    st.header("Executive Dashboard")
+#     st.markdown("""
+#     <div style="
+#     background: linear-gradient(90deg,#7C3AED,#2563EB,#06B6D4);
+#     padding:25px;
+#     border-radius:15px;
+#     text-align:center;
+#     margin-bottom:20px;
+# ">
+
+#     <h1 style="color:white;">
+#         🚀 TalentCopilot AI
+#     </h1>
+
+#     <h4 style="color:white;">
+#         AI Powered Talent Intelligence Platform
+#     </h4>
+
+#     <p style="color:white;">
+#         Resume Screening • Interview Copilot • Talent Analytics
+#     </p>
+
+# </div>
+# """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class='section-header'>
+        📊 Executive Dashboard
+    </div>
+    """, unsafe_allow_html=True)
 
     col1,col2,col3,col4 = st.columns(4)
 
-    col1.metric("Candidates","12")
-    col2.metric("Avg Score","84%")
-    col3.metric("Questions Generated","48")
-    col4.metric("Hiring Readiness","High")
+    col1.metric("👤 Candidates","12")
+    col2.metric("🎯 Avg Score","84%")
+    col3.metric("🤖 Questions Generated","48")
+    col4.metric("✅ Hiring Readiness","High")
+
+    st.markdown("### Hiring Pipeline")
+
+    col1,col2,col3 = st.columns(3)
+
+    with col1:
+        st.success("""
+        ✅ Shortlisted
+
+        7 Candidates
+        """)
+
+    with col2:
+        st.warning("""
+        ⏳ Under Review
+
+        3 Candidates
+        """)
+
+    with col3:
+        st.error("""
+        ❌ Rejected
+
+        2 Candidates
+        """)
+
+    # ADD THIS SECTION NEXT
+    st.info("""
+    👋 Welcome to TalentCopilot AI
+
+    This platform helps recruiters:
+
+    ✅ Screen resumes
+
+    ✅ Generate AI interviews
+
+    ✅ Conduct voice assessments
+
+    ✅ Evaluate candidate responses
+
+    ✅ Generate hiring recommendations
+    """)
 
 # -------------------------------------------------------
 # Skill Dictionary
@@ -272,6 +649,9 @@ def extract_experience(resume_text):
 # -------------------------------------------------------
 # Application Header
 # -------------------------------------------------------
+st.subheader("📄 Upload Candidate Resume")
+st.caption("Drag button below")
+
 st.title("🚀 TalentCopilot AI")
 st.caption(
     "AI-Powered Talent Intelligence Platform"
@@ -285,9 +665,16 @@ st.write(
 # -------------------------------------------------------
 # File Upload and JD Input
 # -------------------------------------------------------
+# uploaded_file = st.file_uploader(
+#     "",
+#     # "Upload Resume",
+#     type=["pdf"]
+# )
+
 uploaded_file = st.file_uploader(
     "Upload Resume",
-    type=["pdf"]
+    type=["pdf"],
+    label_visibility="collapsed"
 )
 
 job_description = st.text_area(
@@ -331,8 +718,112 @@ if uploaded_file:
     # ---------------------------------------------------
     st.subheader("Skills Found in Resume")
 
+    # if resume_skills:
+    #     st.write(", ".join(resume_skills))
+    # else:
+    #     st.warning("No predefined skills detected in the resume.")
+
+    # if resume_skills:
+
+    #     skills_html = ""
+
+    #     for skill in resume_skills:
+    #         skills_html += f"""
+    #         <span style="
+    #             background: linear-gradient(90deg,#2563EB,#7C3AED);
+    #             color: white;
+    #             padding: 6px 12px;
+    #             border-radius: 15px;
+    #             margin: 4px;
+    #             display: inline-block;
+    #             font-size: 14px;
+    #             font-weight: bold;
+    #         ">
+    #             {skill}
+    #         </span>
+    #         """
+
+    #     st.markdown(skills_html, unsafe_allow_html=True)
+
+    # else:
+    #     st.warning("No predefined skills detected in the resume.")
+
+    # if resume_skills:
+
+    #     # skills_html = '<div style="display:flex; flex-wrap:wrap; gap:10px;">'
+    #     skills_html = '<div style="display:flex; flex-wrap:wrap; gap:10px;">'
+
+    #     for skill in resume_skills:
+    #         skills_html += f'''
+    #         <span style="
+    #             background: linear-gradient(90deg,#2563EB,#7C3AED);
+    #             color: white;
+    #             padding: 8px 14px;
+    #             border-radius: 20px;
+    #             font-size: 14px;
+    #             font-weight: bold;
+    #             display:inline-block;
+    #         ">
+    #             {skill}
+    #         </span>
+    #         '''
+
+    #     skills_html += '</div>'
+
+    #     st.markdown(skills_html, unsafe_allow_html=True)
+
+    # else:
+    #     st.warning("No predefined skills detected in the resume.")
+
     if resume_skills:
-        st.write(", ".join(resume_skills))
+
+        cols_per_row = 5
+
+        for i in range(0, len(resume_skills), cols_per_row):
+
+            cols = st.columns(cols_per_row)
+
+            for j, skill in enumerate(resume_skills[i:i + cols_per_row]):
+
+                # cols[j].success(skill)
+            #     cols[j].markdown(
+            #     f"""
+            #     <div style="
+            #         background:linear-gradient(90deg,#0F172A,#1E293B);
+            #         border:1px solid #10B981;
+            #         border-radius:12px;
+            #         padding:12px;
+            #         text-align:center;
+            #         font-weight:bold;
+            #         color:#E2E8F0;
+            #         margin-bottom:8px;
+            #     ">
+            #         {skill.upper()}
+            #     </div>
+            #     """,
+            #     unsafe_allow_html=True
+            # )
+
+                cols[j].markdown(
+                f"""
+                <div style="
+                    background: linear-gradient(135deg,#0F172A,#1E293B);
+                    border: 1px solid #06B6D4;
+                    border-radius: 14px;
+                    padding: 16px;
+                    text-align: center;
+                    font-weight: 700;
+                    font-size: 18px;
+                    color: white;
+                    box-shadow: 0 0 10px rgba(6,182,212,0.2);
+                    transition: all 0.3s ease;
+                ">
+                    {skill.upper()}
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
     else:
         st.warning("No predefined skills detected in the resume.")
 

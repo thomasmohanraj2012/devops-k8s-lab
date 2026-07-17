@@ -62,7 +62,6 @@ section[data-testid="stSidebar"] * {
 
 
 
-from audio_recorder_streamlit import audio_recorder
 from interview.interview_engine import (
     generate_questions,
     generate_expected_answer,
@@ -75,12 +74,8 @@ from interview.answer_evaluator import evaluate_candidate_answer
 
 
 # -------------------------------------------------------
-# Streamlit Page Configuration
+# Application UI
 # -------------------------------------------------------
-st.set_page_config(
-    page_title="AI Resume Screening Assistant",
-    layout="wide"
-)
 
 if st.button("Test Audio"):
 
@@ -89,23 +84,83 @@ if st.button("Test Audio"):
 menu = st.sidebar.radio(
     "Navigation",
     [
-        "Dashboard",
-        "Resume Screening",
-        "Interview Copilot",
-        "Analytics"
+        "🏠 Dashboard",
+        "📄 Resume Screening",
+        "🎤 Interview Copilot",
+        "📊 Analytics"
     ]
 )
 
-if menu == "Dashboard":
+if menu == "🏠 Dashboard":
 
-    st.header("Executive Dashboard")
+    # st.markdown("""
+    # <div style="
+    #     background: linear-gradient(90deg,#1976D2,#42A5F5);
+    #     padding:25px;
+    #     border-radius:15px;
+    #     text-align:center;
+    #     margin-bottom:20px;
+    # ">
+    #     <h1 style="color:white;">
+    #         🚀 TalentCopilot AI
+    #     </h1>
+
+    #     <h4 style="color:white;">
+    #         AI Powered Talent Intelligence Platform
+    #     </h4>
+    # </div>
+    # """, unsafe_allow_html=True)
+
+    st.header("📊 Executive Dashboard")
 
     col1,col2,col3,col4 = st.columns(4)
 
-    col1.metric("Candidates","12")
-    col2.metric("Avg Score","84%")
-    col3.metric("Questions Generated","48")
-    col4.metric("Hiring Readiness","High")
+    col1.metric("👤 Candidates","12")
+    col2.metric("🎯 Avg Score","84%")
+    col3.metric("🤖 Questions Generated","48")
+    col4.metric("✅ Hiring Readiness","High")
+
+    st.markdown("### Hiring Pipeline")
+
+    col1,col2,col3 = st.columns(3)
+
+    with col1:
+        st.success("""
+        ✅ Shortlisted
+
+        7 Candidates
+        """)
+
+    with col2:
+        st.warning("""
+        ⏳ Under Review
+
+        3 Candidates
+        """)
+
+    with col3:
+        st.error("""
+        ❌ Rejected
+
+        2 Candidates
+        """)
+
+    # ADD THIS SECTION NEXT
+    st.info("""
+    👋 Welcome to TalentCopilot AI
+
+    This platform helps recruiters:
+
+    ✅ Screen resumes
+
+    ✅ Generate AI interviews
+
+    ✅ Conduct voice assessments
+
+    ✅ Evaluate candidate responses
+
+    ✅ Generate hiring recommendations
+    """)
 
 # -------------------------------------------------------
 # Skill Dictionary
